@@ -23,3 +23,5 @@ services:
       - MARIADB_USER=bobby
       - MARIADB_PASSWORD=tables
       - MARIADB_DATABASE=myapp
+    ports:
+      - '3307:3306'
