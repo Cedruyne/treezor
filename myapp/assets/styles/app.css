@@ -1,0 +1,65 @@
+@import "~bootstrap";
+
+
+body {
+    font-family: spartan;
+    color: #444;
+}
+
+.jumbotron-img {
+    background: #03396c;
+    color: #fff;
+}
+
+.u-container {
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+    background-color: #efefee;
+}
+
+
+.btn-p {
+    color: #FFFFFF;
+    background: #03396c;
+    border-color: #011f4b;
+}
+
+.btn-p:hover,
+.btn-p:focus,
+.btn-p:active,
+.btn-p.active,
+.open .dropdown-toggle.btn-p {
+    color: #FFFFFF;
+    background-color: #005b96;
+    border-color: #011f4b;
+}
+
+.btn-p:active,
+.btn-p.active,
+.open .dropdown-toggle.btn-p {
+    background-image: none;
+}
+
+.btn-p.disabled,
+.btn-p[disabled],
+fieldset[disabled] .btn-p,
+.btn-p.disabled:hover,
+.btn-p[disabled]:hover,
+fieldset[disabled] .btn-p:hover,
+.btn-p.disabled:focus,
+.btn-p[disabled]:focus,
+fieldset[disabled] .btn-p:focus,
+.btn-p.disabled:active,
+.btn-p[disabled]:active,
+fieldset[disabled] .btn-p:active,
+.btn-p.disabled.active,
+.btn-p[disabled].active,
+fieldset[disabled] .btn-p.active {
+    background-color: #b3cde0;
+    border-color: #6497b1;
+}
+
+
+footer {
+    background-color: #b3cde0;
+}

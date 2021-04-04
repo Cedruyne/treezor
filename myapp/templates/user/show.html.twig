@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateur: {{ utilisateur }}{% endblock %}
+{% block title %}Edition de l'Utilisateur: {{ user.firstname }} {{ user.lastname }}{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -8,11 +8,11 @@
             <div class="col-12">
                 <h2 class="my-4">Détail de l'utilisateur</h2>
                 <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
-                    <div class="q-container-show p-4">
+                    <div class="u-container-show p-4">
                         <div class="row">
                             <div class="col">
-                                <h1 class="q-title-show">{{ utilisateur }}</h1>
-                                <div class="q-display p-3">
+                                <h1 class="u-title-show">{{ user.lastname }}</h1>
+                                <div class="u-display p-3">
                                     <i class="fa fa-quote-left mr-3"></i>
                                     <p class="d-inline">I've been turned into a cat, any thoughts on how to turn back? While I'm adorable, I don't really care for cat food.</p>
                                     <p class="pt-4"><strong>--Tisha</strong></p>

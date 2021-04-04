@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="jumbotron-img jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Ajout d'un nouvel utilisateur</h1>
+        </div>
+    </div>
+    <div class="container">
+        {{ form_start(userForm) }}
+        {{ form_widget(userForm) }}
+        <div class="col text-right">
+            <button type="submit" class="btn btn-lg btn-p mx-3">Enregistrer</button>
+            <button type="button" class="btn btn-lg btn-op">Retour</button>
+        </div>
+        {{ form_end(userForm) }}
+    </div>
+{% endblock %}

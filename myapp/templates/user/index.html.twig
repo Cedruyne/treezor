@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron-img jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Liste des utilisateurs</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col text-right">
+                <a href="{{ path('user_new') }}" ><button class="btn btn-p">Ajouter un utilisateur</button></a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-hover user-list-table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col" class="text-center">Actif</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.birthday|date('d/m/Y') }}</td>
+                        <td class="text-center">
+                            <span class="fa fa-{{ user.active ? 'check text-success' : 'times text-danger' }}"></span>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}"><button class="btn"><span class="fa fa-edit"></span></button> </a>
+                            {% if user.active %}
+                                <a href="{{ path('user_remove', {'id': user.id}) }}"><button class="btn"><span class="fa fa-trash"></span></button> </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
