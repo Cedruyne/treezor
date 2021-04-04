@@ -1,6 +1,3 @@
-@import "~bootstrap";
-
-
 body {
     font-family: spartan;
     color: #444;
@@ -10,13 +7,6 @@ body {
     background: #03396c;
     color: #fff;
 }
-
-.u-container {
-    border-top-right-radius: .25rem;
-    border-top-left-radius: .25rem;
-    background-color: #efefee;
-}
-
 
 .btn-p {
     color: #FFFFFF;

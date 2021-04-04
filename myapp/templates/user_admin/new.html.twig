@@ -8,9 +8,9 @@
     <div class="container">
         {{ form_start(userForm) }}
         {{ form_widget(userForm) }}
-        <div class="col text-right">
-            <button type="submit" class="btn btn-lg btn-p mx-3">Enregistrer</button>
-            <button type="button" class="btn btn-lg btn-op">Retour</button>
+        <div class="col text-right p-0">
+            <button type="button" class="btn btn-outline-secondary mr-2" onClick="window.history.back();">Retour</button>
+            <button type="submit" class="btn btn-p">Enregistrer</button>
         </div>
         {{ form_end(userForm) }}
     </div>

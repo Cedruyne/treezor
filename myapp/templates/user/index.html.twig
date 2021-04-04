@@ -7,6 +7,15 @@
         </div>
     </div>
     <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         <div class="row mb-3">
             <div class="col text-right">
                 <a href="{{ path('user_new') }}" ><button class="btn btn-p">Ajouter un utilisateur</button></a>
@@ -16,7 +25,6 @@
             <table class="table table-hover user-list-table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>
@@ -28,7 +36,6 @@
                 <tbody>
                 {% for user in users %}
                     <tr>
-                        <th scope="row">{{ user.id }}</th>
                         <td>{{ user.firstname }}</td>
                         <td>{{ user.lastname }}</td>
                         <td>{{ user.email }}</td>
@@ -36,9 +43,10 @@
                         <td class="text-center">
                             <span class="fa fa-{{ user.active ? 'check text-success' : 'times text-danger' }}"></span>
                         <td>
-                            <a href="{{ path('user_show', {'id': user.id}) }}"><button class="btn"><span class="fa fa-edit"></span></button> </a>
+                            <a href="{{ path('user_show', {'id': user.id}) }}"><button class="btn btn-sm"><span class="fa fa-eye"></span></button></a>
                             {% if user.active %}
-                                <a href="{{ path('user_remove', {'id': user.id}) }}"><button class="btn"><span class="fa fa-trash"></span></button> </a>
+                                <a href="{{ path('user_edit', {'id': user.id}) }}"><button class="btn btn-sm"><span class="fa fa-edit"></span></button></a>
+                                <button class="btn btn-sm" data-toggle="modal" data-target="#userRemove{{ user.id }}"><span class="fa fa-trash"></span></button>
                             {% endif %}
                         </td>
                     </tr>
@@ -47,5 +55,27 @@
             </table>
         </div>
     </div>
+    {% for user in users %}
+        <!-- Modal -->
+        <div class="modal fade" id="userRemove{{ user.id }}" tabindex="-1" aria-labelledby="userRemoveModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Suppression de l'utilisateur</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Fermer</button>
+                        <a href="{{ path('user_remove', {'id': user.id}) }}"><button type="button" class="btn btn-p">Supprimer</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 

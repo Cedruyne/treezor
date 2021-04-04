@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +27,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id<\d+>}", name="user_show")
+     * @Route("/user/{id<\d+>}", name="user_show")
      * @param int $id
      * @return Response
      */
@@ -46,30 +45,24 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/new", name="user_new")
+     * @Route("/adm/user/new", name="user_new")
      */
-    public function new(LoggerInterface $logger, EntityManagerInterface $entityManager, Request $request)
+    public function new(EntityManagerInterface $em, Request $request)
     {
        $form = $this->createForm(UserFormType::class);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
-
            /**  @var User $user */
            $user = $form->getData();
            $user
                ->setActive(User::ACTIVE_YES)
            ;
-           $entityManager->persist($user);
-           $entityManager->flush();
+           $em->persist($user);
+           $em->flush();
 
            $this->addFlash('success', sprintf('L\'utilisateur %s %s a été ajouté avec succès.',
                $user->getFirstName(),
                $user->getLastname()
-           ));
-
-           $logger->info(sprintf(
-               'New user successfully created ! Its database ID is: #%d',
-               $user->getId()
            ));
 
            return $this->redirectToRoute('homepage');
@@ -83,20 +76,43 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id<\d+>}/del", name="user_remove")
+     * @Route("/adm/user/{id}/edit", name="user_edit")
+     */
+    public function edit(User $user, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(UserFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success', 'L\'utilisateur a été modifié !');
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('user_admin/new.html.twig', [
+            'userForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/adm/user/{id<\d+>}/del", name="user_remove")
      * @param int $id
      * @return Response
      */
-    public function remove(int $id, EntityManagerInterface $entityManager): Response
+    public function remove(int $id, EntityManagerInterface $em): Response
     {
-        $repository = $entityManager->getRepository(User::class);
+        $repository = $em->getRepository(User::class);
         $user = $repository->findOneBy(['id' => $id]);
         if (!$user) {
-            throw $this->createNotFoundException(sprintf('No user found for id "%d"', $id));
+            throw $this->createNotFoundException(sprintf('Aucun utilisateur trouvé avec l\'id "%d"', $id));
         }
+        $user->setActive(User::ACTIVE_NO);
+        $em->persist($user);
+        $em->flush();
 
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
+        $this->addFlash('success', 'L\'utilisateur a été désactivé !');
+
+        return $this->redirectToRoute('homepage');
     }
 }
